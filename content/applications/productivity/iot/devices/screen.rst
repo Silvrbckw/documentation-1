@@ -66,8 +66,8 @@ Things)` Box homepage.
 Usage
 =====
 
-Show Point of Sales orders to customers
----------------------------------------
+Show Point of Sale orders to customers
+--------------------------------------
 
 To use the screen in the :guilabel:`Point of Sale` app, go to :menuselection:`Point of Sale -->
 Configuration --> Point of Sale`, open the desired screen, click on :guilabel:`Edit`, and enable the
