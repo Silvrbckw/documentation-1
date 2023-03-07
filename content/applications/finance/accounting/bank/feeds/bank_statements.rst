@@ -2,18 +2,19 @@
 Bank statements
 ===============
 
-Importing your bank statements allows you to keep track of your bank account transactions and
-reconcile them with the ones recorded in Odoo.
+Importing bank statements allows keeping track of bank account transactions and reconcile them with
+the ones recorded in Odoo.
 
-We recommend using :doc:`the bank synchronization feature <bank_synchronization>` for more
-efficiency. However, if you do not want to use it or if your bank is not yet supported, other
-options exist:
+With :doc:`bank synchronization <bank_synchronization>` feature, the process is automated. However,
+if you do not want to use it or if your bank is not yet supported, other options exist:
 
-- Import the bank statement files delivered by your bank;
-- Register the bank statements manually.
+- :ref:`Import bank statements <import-statements>` delivered by your bank;
+- :ref:`Register bank transactions <register-transactions>` manually.
 
-Import bank statements files
-============================
+.. _import-statements:
+
+Import bank statements
+======================
 
 Odoo supports multiple file formats to import bank statements:
 
@@ -23,40 +24,26 @@ Odoo supports multiple file formats to import bank statements:
 - Quicken Interchange Format (.QIF);
 - Belgium: Coded Statement of Account (.CODA).
 
-To import a file, go to the Accounting dashboard and click on :guilabel:`Import (Statements)` under
-the :guilabel:`Bank` window, or click on the drop-down menu (:guilabel:`⋮`) button and then on
-:guilabel:`Import Statement`.
+To import a file, go to the :guilabel:`Accounting Dashboard` and in the :guilabel:`Bank` journal,
+on :guilabel:`Import Statement`.
 
-.. image:: bank_statements/bank-overview.png
+.. image:: bank_statements/import-statements.png
    :align: center
-   :alt: Import a bank statement file in Odoo Accounting
+   :alt: Import bank statements from bank journal
 
-Next, select the file you want to import and click on :guilabel:`Upload`.
+Next, select the file you want to import and upload it.
 
-Once the file uploaded, the **import widget** helps you set formatting options and **map** the
-different columns you want to import. You also can :guilabel:`test` the bank statement file before
-importing it to your database.
+After setting the necessary formatting options and mapping the needed columns, you have the
+possibility to make a :guilabel:`Test` or you can directly :guilabel:`Import` your bank statement
+files.
 
-.. image:: bank_statements/import-bank-statement.png
-   :align: center
-   :alt: Register bank statements manually in Odoo Accounting
+.. _register-transactions:
 
-Register bank statements manually
-=================================
+Register bank transactions manually
+===================================
 
-If needed, you can also record your bank statements manually. To do so, go to the
-:guilabel:`Accounting dashboard` and click on the :guilabel:`Create Statements` under the
-:guilabel:`Bank` window. Alternatively, you can click the drop-down menu (:guilabel:`⋮`) button, and
-then :guilabel:`New Statement`.
+You can also record your bank transactions manually. To do so, go to
+:guilabel:`Accounting Dashboard`, click on the :guilabel:`Bank` journal and then on
+:guilabel:`New`. Make sure to fill out the :guilabel:`Partner` and :guilabel:`Label` fields to
+ease the reconciliation process.
 
-To ease the reconciliation process, make sure to fill out the :guilabel:`Partner` field. You can
-also type in the payments’ references in the :guilabel:`Label` field. Add a new line for each
-transaction written on the original bank statement.
-
-.. image:: bank_statements/bank-statements-03.png
-   :align: center
-   :alt: Register bank statements manually in Odoo Accounting
-
-.. note::
-   The **Ending Balance** and the **Computed Balance** should have the same amount. If this is not
-   the case, make sure there are no mistakes in the transactions’ amounts.
