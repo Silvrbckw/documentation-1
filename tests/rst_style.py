@@ -99,10 +99,7 @@ def check_heading_spacing(file, lines, options=None):
                 continue  # We handle this heading via its lower delimiter.
 
             heading_lno = lno - 1
-            if MAIN_HEADING_RE.search(''.join(lines[lno-2:lno+1])):  # Lower delimiter of h1.
-                main_heading = True
-            else:  # Lower delimiter of a heading of level 2-6.
-                main_heading = False
+            main_heading = bool(MAIN_HEADING_RE.search(''.join(lines[lno-2:lno+1])))
             lno_before_heading = heading_lno - (2 if main_heading else 1)
             if lno_before_heading >= 0 and lines[lno_before_heading] != '\n':
                 # Heading doesn't have to be preceded by a blank line if on first line of the file.

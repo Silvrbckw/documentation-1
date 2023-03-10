@@ -17,7 +17,7 @@ def generate_redirects(app):
         logger.warning("Could not find redirects dir at '%s'", redirects_dir)
         return
 
-    if not type(app.builder) == builders.StandaloneHTMLBuilder:
+    if type(app.builder) != builders.StandaloneHTMLBuilder:
         logger.info("Redirects are only supported by the 'html' builder. Skipping...")
         return
 

@@ -54,14 +54,11 @@ class Div(Directive):
         self.assert_has_content()
         text = '\n'.join(self.content)
         try:
-            if self.arguments:
-                classes = directives.class_option(self.arguments[0])
-            else:
-                classes = []
+            classes = directives.class_option(self.arguments[0]) if self.arguments else []
         except ValueError:
             raise self.error(
-                'Invalid class attribute value for "%s" directive: "%s".'
-                % (self.name, self.arguments[0]))
+                f'Invalid class attribute value for "{self.name}" directive: "{self.arguments[0]}".'
+            )
         node = div(text)
         node['classes'].extend(classes)
         self.add_name(node)
@@ -122,10 +119,13 @@ def makerole(node):
 
 
 def addnode(app, node, nodename):
-    app.add_node(node, html=(
-        lambda self, n: self.body.append(self.starttag(n, nodename)),
-        lambda self, n: self.body.append('</%s>' % nodename)
-    ))
+    app.add_node(
+        node,
+        html=(
+            lambda self, n: self.body.append(self.starttag(n, nodename)),
+            lambda self, n: self.body.append(f'</{nodename}>'),
+        ),
+    )
 
 
 def initialism(*args, **kwargs):

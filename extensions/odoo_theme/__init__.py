@@ -92,12 +92,15 @@ def resolve(old_resolve, tree, docname, *args, **kwargs):
         clear its reference URL. (<a href="#"/>)
         If the page has the `show-content` metadata, don't clear the reference.
         """
-        if _node_docname and any(
-            isinstance(_subnode, nodes.bullet_list)
-            for _subnode in _reference_node.parent.parent.children
-        ):  # The node references a toc
-            if 'show-content' not in tree.env.metadata[_node_docname]:
-                _reference_node['refuri'] = '#'  # The page must not be accessible
+        if (
+            _node_docname
+            and any(
+                isinstance(_subnode, nodes.bullet_list)
+                for _subnode in _reference_node.parent.parent.children
+            )
+            and 'show-content' not in tree.env.metadata[_node_docname]
+        ):
+            _reference_node['refuri'] = '#'  # The page must not be accessible
 
     def _set_docname_as_class(_reference_node, _node_docname):
         _node_docname = _node_docname or docname  # refuri==None <-> href="#"

@@ -27,8 +27,8 @@ class OdooClassDocumenter(ClassDocumenter):
 
     def add_content(self, more_content):
         sourcename = self.get_sourcename()
-        cls = self.object
         if 'main' in self.options:
+            cls = self.object
             self.add_line(f".. _model-{cls._name.replace('.', '-')}:", sourcename)
             self.add_line('.. py:attribute:: _name', sourcename)
             self.add_line(f'  :value: {cls._name}', sourcename)
@@ -85,23 +85,29 @@ class FieldDocumenter(AttributeDocumenter):
         source_name = self.get_sourcename()
         field = self.object
         if field.required:
-            self.add_line(f":required:", source_name)
+            self.add_line(":required:", source_name)
         self.add_line(f":name: {field.string}", source_name)
         if field.readonly:
-            self.add_line(f":readonly: this field is not supposed to/cannot be set manually", source_name)
+            self.add_line(
+                ":readonly: this field is not supposed to/cannot be set manually",
+                source_name,
+            )
         if not field.store:
-            self.add_line(f":store: this field is there only for technical reasons", source_name)
-        if field.type == 'selection':
-            if isinstance(field.selection, (list, tuple)):
-                self.add_line(f":selection:", source_name)
-                for tech, nice in field.selection:
-                    self.add_line(f"  ``{tech}``: {nice}", source_name)
+            self.add_line(
+                ":store: this field is there only for technical reasons",
+                source_name,
+            )
+        if field.type == 'selection' and isinstance(
+            field.selection, (list, tuple)
+        ):
+            self.add_line(":selection:", source_name)
+            for tech, nice in field.selection:
+                self.add_line(f"  ``{tech}``: {nice}", source_name)
         if field.type in ('many2one', 'one2many', 'many2many'):
             comodel_name = field.comodel_name
             string = f":comodel: :ref:`{comodel_name} <model-{comodel_name.replace('.', '-')}>`"
             self.add_line(string, source_name)
-            reference = self.config.model_references.get(comodel_name)
-            if reference:
+            if reference := self.config.model_references.get(comodel_name):
                 self.add_line(f":possible_values: `{reference} <{self.config.source_read_replace_vals['GITHUB_PATH']}/{reference}>`__", source_name)
         if field.default:
             self.add_line(f":default: {field.default(odoo.models.Model)}", source_name)
@@ -117,8 +123,7 @@ class FieldDocumenter(AttributeDocumenter):
         # only read docstring of field instance, do not fallback on field class
         field = self.object
         field.__doc__ = field.__dict__.get('__doc__', "")
-        res = super().get_doc(*args, **kwargs)
-        return res
+        return super().get_doc(*args, **kwargs)
 
 
 def disable_warn_missing_reference(app, domain, node):

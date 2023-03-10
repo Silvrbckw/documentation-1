@@ -82,7 +82,7 @@ source_read_replace_vals = {
     'CURRENT_MAJOR_VERSION': current_major_version,
     'GITHUB_PATH': f'https://github.com/odoo/odoo/blob/{version}',
     'GITHUB_ENT_PATH': f'https://github.com/odoo/enterprise/blob/{version}',
-    'OWL_PATH': f'https://github.com/odoo/owl/blob/master',
+    'OWL_PATH': 'https://github.com/odoo/owl/blob/master',
 }
 
 # Add extensions directory to PYTHONPATH
@@ -110,10 +110,10 @@ else:
         # Running odoo needs python 3.7 min but monkey patch version_info to be compatible with 3.6.
         sys.version_info = (3, 7, 0)
     odoo_dir = odoo_sources_dirs[0].resolve()
-    source_read_replace_vals['ODOO_RELPATH'] = '/../' + str(odoo_sources_dirs[0])
+    source_read_replace_vals['ODOO_RELPATH'] = f'/../{str(odoo_sources_dirs[0])}'
     sys.path.insert(0, str(odoo_dir))
     import odoo.addons
-    odoo.addons.__path__.append(str(odoo_dir) + '/addons')
+    odoo.addons.__path__.append(f'{str(odoo_dir)}/addons')
     from odoo import release as odoo_release  # Don't collide with Sphinx's 'release' config option
     odoo_version = '.'.join(str(s) for s in odoo_release.version_info[:2]).replace('~', '-')  # Change saas~XX.Y to saas-XX.Y
     odoo_version = 'master' if 'alpha' in odoo_release.version else odoo_version
@@ -364,9 +364,8 @@ def setup(app):
         to_patch.option_spec['condition'] = context_eval
         original_run = to_patch.run
         def new_run(self):
-            if not self.options.get('condition', True):
-                return []
-            return original_run(self)
+            return original_run(self) if self.options.get('condition', True) else []
+
         to_patch.run = new_run
 
     for to_patch in (

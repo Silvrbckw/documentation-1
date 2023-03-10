@@ -22,8 +22,7 @@ def jsonrpc(path, params):
     }
     req = requests.post(domain_name+path, json=payload, timeout=10)
     req.raise_for_status()
-    resp = req.json()
-    return resp
+    return req.json()
 
 
 with open(path_to_pdf, "rb") as file:
