@@ -160,6 +160,6 @@ class BootstrapTranslator(HTML5Translator):
         classes.insert(0, "table")  # compat
 
         if 'align' in node:
-            classes.append('align-%s' % node['align'])
+            classes.append(f"align-{node['align']}")
         tag = self.starttag(node, 'table', CLASS=' '.join(classes))
         self.body.append(tag)

@@ -48,7 +48,7 @@ class Card(SphinxDirective):
         current_document = f'{self.env.docname}.rst'
         target_document = f'{self.options["target"]}.rst'
         if target_document.startswith('/'):
-            raise self.warning(f"card directive's target starts with a '/'")
+            raise self.warning("card directive's target starts with a '/'")
         target_file = Path(self.env.srcdir) / Path(current_document).parent / target_document
         if not target_file.exists():
             raise self.warning(f"card directive targets nonexisting document '{target_document}'")
